@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import Login from './Login'
+import { useAuth } from '../Context/Authprovider'
+import Logout from './Logout'
 
-const Navbar = () => {
+function Navbar() {
+  const [authUser, setAuthUser] = useAuth()
+
   const [sticky, setsticky] = useState(false)
 
   useEffect(() => {
@@ -19,7 +23,7 @@ const Navbar = () => {
         window.removeEventListener('scroll', handlescroll)
       }
     }
-  }, [])
+  }, []);
 
 
   return (
@@ -35,9 +39,9 @@ const Navbar = () => {
               <li><a href='/'>HOME</a></li>
 
               <li><a href='/Book'>BOOKS</a></li>
-              <li><a>CONTACT</a></li>
+              <li><a href='/Contact'>CONTACT</a></li>
 
-              <li><a>ABOUT</a></li>
+              <li><a href='/About'>ABOUT</a></li>
             </ul>
           </div>
           <a className="btn btn-ghost text-xl font-bold">SJ-BOOKS</a>
@@ -49,9 +53,9 @@ const Navbar = () => {
               <li><a href='/'>HOME</a></li>
 
               <li><a href='/Book'>BOOKS</a></li>
-              <li><a>CONTACT</a></li>
+              <li><a href='/Contact'>CONTACT</a></li>
 
-              <li><a>ABOUT</a></li>
+              <li><a href='/About'>ABOUT</a></li>
             </ul>
 
           </div>
@@ -61,10 +65,19 @@ const Navbar = () => {
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70"><path fillRule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clipRule="evenodd" /></svg>
             </label>
           </div>
-          <div >
-            <a className="bg-[#1d232a] px-4 py-2 h-8 cursor-pointer flex-wrap  duration-500" onClick={() => document.getElementById('my_modal_3').showModal()}>Login</a>
-            <Login />
-          </div>
+          {
+            authUser ?(<Logout />)  :(
+               <div >
+              <a className="bg-[#1d232a] px-4 py-2 h-8 cursor-pointer flex-wrap  duration-500" 
+              onClick={() => 
+              document.getElementById('my_modal_3').showModal()
+              }>Login</a>
+              <Login />
+            </div>)
+          }
+         
+
+
         </div>
       </div></div>
   )
